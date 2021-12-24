@@ -15,7 +15,7 @@
 #   ],
 #   "startNode": "A"
 # }
-# Sample Output: ["A","B","E","F","I","J","C","D","G","K","H"]
+# Sample Output: ["A","B","C","D","E","F","G","H","I","J","K"]
 
 class Node:
     def __init__(self, name):
@@ -26,14 +26,13 @@ class Node:
         self.children.append(Node(name))
         return self
 
-    def depthFirstSearch(self, array):
-        array.append(self.name)
-        for child in self.children:
-            child.depthFirstSearch(array)
+    def breadthFirstSearch(self, array):
+        queue = [self]
+        while len(queue) > 0:
+            currentNode = queue.pop(0)
+            array.append(currentNode.name)
+            for child in currentNode.children:
+                queue.append(child)
         return array
 
-# Note: O(V + E) time | O(V) space --> Where V = nodes/vertices, E = edges
-# Depth First Search of parent node/vertex will not be resolved before 
-# its child node and so on (so you will have V nodes/vertices) on the 
-# call stack --> that's why O(V) --> This is the reason without counting
-# the elements in array
+# Note: Storing V nodes; Queue holds nodes where worst case can be all the nodes are in Queue
